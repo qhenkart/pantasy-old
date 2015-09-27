@@ -22,15 +22,15 @@ var app = express();
 var url = 'mongodb://localhost:27017/pantasy';
 
 //establishes a Session store with MongoDB, this creates persistant sessions
-var store = new MongoDBStore({
-  uri: 'mongodb://localhost/pantasy',
-  collection: 'mySessions'
-});
+// var store = new MongoDBStore({
+//   uri: 'mongodb://localhost/pantasy',
+//   collection: 'mySessions'
+// });
 
 // error handling for session store
-store.on('error', function(error) {
-  console.log('ERROR IN STORE: ', error);
-});
+// store.on('error', function(error) {
+//   console.log('ERROR IN STORE: ', error);
+// });
 
 // pass passport for authentication configuration
 require('./server/config/passport.js')(passport);
@@ -58,7 +58,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   cookie: { secure: true },
-  store: store
+  // store: store
 }));
 
 // Initializes Passport
