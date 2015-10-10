@@ -1,0 +1,22 @@
+<div ui-view>
+
+  <div class="row">
+    <div class="jumbotron pants-profile col-md-3 col-sm-4">
+      <div class="jumbotron" id="pants-photo">
+      </div>
+    <form action="/upload" enctype="multipart/form-data" method="post">
+      Upload a Photo:
+      <div class-"form-group">
+        <input name="title" class="form-control" type="text" placholder="image" />
+      </div>
+      <div class-"form-group">
+        <input multiple="multiple" class="form-control" name="upload" type="file" />
+      </div>
+
+      <div class="form-group">
+        <input type="submit" class="form-control btn btn-info" value="Upload" />
+      </div>
+    </form>
+    </div>
+  </div>  
+</div>

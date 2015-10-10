@@ -40,6 +40,7 @@ module.exports = function(passport) {
     function(accessToken, refreshToken, profile, done) {
 //saves user data into database or logs them in if they already exist. Always updates
 //facebook token
+
       client.then(function(db) {
         return db.collection('users').findOneAsync({ id: profile.id })
         .then(function(user) {

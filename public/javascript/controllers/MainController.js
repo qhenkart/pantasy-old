@@ -2,5 +2,5 @@
 
 angular.module('pantasy')
   .controller('MainController', function(){
-    this.title = "NOT A TEST"
+    this.title = "main controller"
   })

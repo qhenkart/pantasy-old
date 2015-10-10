@@ -3,6 +3,8 @@
 <html ng-app="pantasy">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pantasy</title>
     <meta name="description" content="">
     <link rel="stylesheet" href="./stylesheets/style.css">
@@ -10,7 +12,25 @@
 
   </head>
   <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Pantasy</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="#">Pants Profile</a></li>
+          <li><a href="#">Browse Pants</a></li>
+          <li><a href="/auth/facebook">Log in</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a data-toggle="modal" data-target="#myModal">Buy Pants</a></li>
+        </ul>
+      </div>
+    </nav>
     <div ui-view></div>
+   
+
+
 
 
 
@@ -21,7 +41,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap-tpls.js"></script>
     <script src="./javascript/app.js"></script>
     <script src="./javascript/controllers/MainController.js"></script>
+    <script src="./javascript/controllers/PantController.js"></script>
   </body>
 </html>

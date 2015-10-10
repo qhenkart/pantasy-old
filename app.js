@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var ejs = require('ejs');
+var qt = require('quickthumb');
+
 
 
 var passport = require('passport');
@@ -15,8 +17,8 @@ var client = require('./server/config/mongo');
 
 
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var routes = require('./server/routes/index');
+var pants = require('./server/routes/pants');
 
 var app = express();
 
@@ -52,6 +54,7 @@ app.set('views', __dirname + '/views');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/public')));
+app.use(qt.static(__dirname + '/'));
 
 //passport Oauth session configuration
 app.use(session({
@@ -71,8 +74,8 @@ app.use(passport.session());
 
 
 
-app.use('/', routes);
-app.use('/users', users);
+app.use('/', routes(passport));
+app.use('/p', pants);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -104,6 +107,11 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }    
+  res.render('login')
+} 
 
 
 module.exports = app;

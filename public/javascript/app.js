@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('pantasy', ['ui.router'])
+angular.module('pantasy', ['ui.router', 'ui.bootstrap'])
 
 .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
   $stateProvider
@@ -10,5 +10,13 @@ angular.module('pantasy', ['ui.router'])
       controller: 'MainController',
       controllerAs: 'main'
     })
+    .state('pant', {
+      url: '/p/:slug',
+      templateUrl: '../templates/pant.html',
+      controller: 'PantController',
+      controllerAs: 'pant'
+    })
     $urlRouterProvider.otherwise('/app');
 }])
+
+
