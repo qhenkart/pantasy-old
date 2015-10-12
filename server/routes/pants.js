@@ -6,17 +6,26 @@ var util = require('util');
 
 module.exports = function(passport) {
   var router = express.Router();
-/* GET users listing. */
-  router.get('/p/:code', function(req, res) {
+
+  router.get('/', function(req, res){
+    //browse pants
+  })
+
+  router.get('/:code', function(req, res) {
+    console.log('getting ', req.params.code)
     mongo.checkPantID(req, res, function(pant){
       res.json(pant)
     })
   });
 
+  router.post('/comments', function(req, res){
+    mongo.addComment(req, res, function(resp){
+      res.json(resp);
+    })
+    
+  });
 
-
-
-  router.post('/p/:code/upload', ensureAuthenticated,function (req, res){
+  router.post('/:code/upload', ensureAuthenticated,function (req, res){
     console.log(req.params)
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {
@@ -45,3 +54,8 @@ module.exports = function(passport) {
 
   return router;
 }
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }    
+  res.render('login')
+} 

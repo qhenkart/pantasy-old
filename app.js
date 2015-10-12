@@ -75,7 +75,8 @@ app.use(passport.session());
 
 
 app.use('/', routes(passport));
-app.use('/p', pants);
+app.use('/p', pants(passport));
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -91,7 +92,8 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
+    console.error('error', "msg: ",err.message, "error: ",err)
+    res.json({
       message: err.message,
       error: err
     });
@@ -102,16 +104,13 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.render('error', {
+  console.error('error', "msg: ",err.message, "error: ",err)
+  res.json({
     message: err.message,
-    error: {}
+    error: err
   });
 });
 
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }    
-  res.render('login')
-} 
 
 
 module.exports = app;

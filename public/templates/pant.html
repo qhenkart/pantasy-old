@@ -1,22 +1,37 @@
-<div ui-view>
+  <div ui-view>
+    <div class="row">
+      <div class="jumbotron col-md-3 col-sm-4 col-md-offset-1 pants-profile">
+        <div class="row">
+          <div class="jumbotron col-md-10" id="pants-photo">
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-group">
+            <form enctype="multipart/form-data">
+            Upload a Photo:
+                 <input name="title" type="text" class="form-control" placeholder="Photo Caption"/>
+                <input multiple="multiple" class="form-control" name="upload" type="file" />
+                <input type="submit" class="form-control btn btn-primary" ng-click="pant.newPhoto($event)" value="Upload" />
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="jumbotron col-sm-7 pants-comments">
+        <div class="row">
+          <form class="col-md-10 col-md-offset-1">
+          <div class="input-group">
+             <input type="text" class="form-control" ng-model="val" placeholder="What's your Pantasy story?">
+             <span class="input-group-btn">
+                  <button class="btn btn-primary" ng-click="pant.newComment(val)" type="button">Submit</button>
+             </span>
+            </form>
+          </div>
+        </div>
+        <div class='row'>
+          <div class="jumbotron col-md-10 col-md-offset-1 messages" id="messages">
+          </div>
+        </div>
 
-  <div class="row">
-    <div class="jumbotron pants-profile col-md-3 col-sm-4">
-      <div class="jumbotron" id="pants-photo">
       </div>
-    <form action="/upload" enctype="multipart/form-data" method="post">
-      Upload a Photo:
-      <div class-"form-group">
-        <input name="title" class="form-control" type="text" placholder="image" />
-      </div>
-      <div class-"form-group">
-        <input multiple="multiple" class="form-control" name="upload" type="file" />
-      </div>
-
-      <div class="form-group">
-        <input type="submit" class="form-control btn btn-info" value="Upload" />
-      </div>
-    </form>
-    </div>
-  </div>  
-</div>
+    </div>  
+  </div>

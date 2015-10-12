@@ -1,6 +1,12 @@
 'use strict';
 
-angular.module('pantasy', ['ui.router', 'ui.bootstrap'])
+angular.module('pantasy', ['ui.router', 
+  'ui.bootstrap',
+  'pantasy.main',
+  'pantasy.pants',
+  'pantasy.services',
+  'ngMessages'
+])
 
 .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
   $stateProvider
