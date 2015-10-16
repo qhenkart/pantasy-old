@@ -27,6 +27,7 @@ angular.module('pantasy')
     }
 
     var postComment = function(e){
+      console.log('about to post')
       var code = $location.path().match(/[^\/p\/]/g).join('');
       return $http.post('/p/comments', {code: code, comment: e});
     }

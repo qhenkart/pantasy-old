@@ -23,6 +23,7 @@ module.exports = function(passport) {
   });
 
   router.post('/comments',function(req, res){
+    console.log('postd coment')
     req.body.comment = {text: req.body.comment, created_at: new Date(), name: req.user.name, profile: req.user.profile}
     mongo.addComment(req, res, function(resp){
       res.json(resp);

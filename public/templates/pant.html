@@ -18,24 +18,41 @@
       </div>
       <div class="jumbotron col-sm-7 pants-comments">
         <div class="row">
-          <form class="col-md-10 col-md-offset-1">
+          <form class="col-md-10 col-md-offset-1" ng-submit="pant.newComment(val)">
           <div class="input-group">
-             <input type="text" class="form-control" ng-model="val" placeholder="What's your Pantasy story?">
+             <input type="text" class="form-control" id="comment-field" ng-model="val" placeholder="What's your Pantasy story?">
              <span class="input-group-btn">
-                  <button class="btn btn-primary" ng-click="pant.newComment(val)" type="button">Submit</button>
+                  <button class="btn btn-primary" type="submit">Submit</button>
              </span>
             </form>
           </div>
         </div>
         <div class='row'>
           <div class="jumbotron col-md-10 col-md-offset-1 messages" id="messages">
-            <ul "list-group">
-              <li class="list-group-item comment-list" ng-repeat="comment in pant.pant.comments">
-                <img class="profile-image" src={{comment.profile}}>
-                <span class="comments">{{comment.text}}</span>
-                <div class="timestamp">{{comment.created_at}}</div>
-              </li>
-            </ul>
+              <!-- <li class="list-group-item comment-list" ng-repeat="comment in pant.pant.comments"> -->
+              <article class="row" ng-repeat="comment in pant.pant.comments">
+                  <div class="col-md-2 col-sm-2 hidden-xs">
+                    <figure class="thumbnail">
+                      <img class="img-responsive" src={{comment.profile}} />
+                      <figcaption class="text-center">{{comment.name}}</figcaption>
+                    </figure>
+                  </div>
+                  <div class="col-md-10 col-sm-10">
+                    <div class="panel panel-default arrow left">
+                      <div class="panel-body">
+                        <header class="text-left">
+                          <div class="comment-user username">{{comment.name}}</div>
+                          <time class="comment-date timestamp">{{comment.created_at}}</time>
+                        </header>
+                        <div class="comment-post">
+                          
+                            {{comment.text}}
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
           </div>
         </div>
       </div>
