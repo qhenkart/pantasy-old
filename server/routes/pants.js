@@ -12,13 +12,18 @@ module.exports = function(passport) {
   })
 
   router.get('/:code', function(req, res) {
+    res.redirect('/#/p/'+req.params.code);
+  });
+
+  router.get('/:code/info', function(req, res) {
     console.log('getting ', req.params.code)
     mongo.checkPantID(req, res, function(pant){
       res.json(pant)
     })
   });
 
-  router.post('/comments', function(req, res){
+  router.post('/comments',function(req, res){
+    req.body.comment = {text: req.body.comment, created_at: new Date(), name: req.user.name, profile: req.user.profile}
     mongo.addComment(req, res, function(resp){
       res.json(resp);
     })
@@ -56,6 +61,7 @@ module.exports = function(passport) {
 }
 
 function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }    
-  res.render('login')
+  if (req.isAuthenticated()) { return next(); }  
+  console.log("user not logged in")  
+  res.json({success:false, msg: 'You must be authenticated'})
 } 

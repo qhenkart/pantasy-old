@@ -9,7 +9,9 @@
     <meta name="description" content="">
     <link rel="stylesheet" href="./stylesheets/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./thirdparty/jsModal/css/jsmodal-light.css">
 
+    <base href="/">
   </head>
   <body>
     <nav class="navbar navbar-default">
@@ -29,14 +31,18 @@
     </nav>
     <div ui-view></div>
 
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap-tpls.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular-messages.js"></script>
-    <script src="./javascript/services/apiFactory.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
     <script src="./javascript/app.js"></script>
+    <script src="./javascript/services/apiFactory.js"></script>
+
     <script src="./javascript/controllers/MainController.js"></script>
     <script src="./javascript/controllers/PantController.js"></script>
+    <script src="./thirdparty/jsModal/js/jsmodal-1.0d.js"></script>
+    <script src="./thirdparty/moment.js"></script>
   </body>
 </html>

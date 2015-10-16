@@ -10,8 +10,15 @@ module.exports = function(passport) {
       res.sendFile('../public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
   });
 
-  router.get('/auth/facebook', passport.authenticate('facebook'), function(req, res) {
-  });
+  // router.get('/auth/facebook', function(req, res){
+  //   req.session.something = req.headers.something
+  //   console.log(req.headers.something, "authentication begingin")
+  //   passport.authenticate('facebook')
+  // });
+
+  router.get('/auth/facebook',
+    passport.authenticate('facebook'));
+ 
 
   // GET /auth/facebook/callback
   //   Use passport.authenticate() as route middleware to authenticate the
@@ -19,18 +26,20 @@ module.exports = function(passport) {
   //   login page.  Otherwise, the primary route function function will be called,
   //   which, in this example, will redirect the user to the home page.
   router.get('/auth/facebook/callback',
-    passport.authenticate('facebook', { failureRedirect: '/#/signin' }),
+    passport.authenticate('facebook', { failureRedirect: '/' }),
     function(req, res) {
-      res.redirect('/#/app');
+      console.log(req.user)
+      res.redirect(req.session.something);
   });
 
   
 
   //checks if user is authenticated to manage front-end restrictions
   router.get('/auth/isAuthenticated', function(req, res){
+    req.session.something = req.headers.something;
     var authorized = {};
     authorized.auth = req.isAuthenticated();
-    res.json(authorized);
+    res.json({authorized: authorized.auth, user: req.user});
   });
   return router
 }

@@ -29,9 +29,17 @@
         </div>
         <div class='row'>
           <div class="jumbotron col-md-10 col-md-offset-1 messages" id="messages">
+            <ul "list-group">
+              <li class="list-group-item comment-list" ng-repeat="comment in pant.pant.comments">
+                <img class="profile-image" src={{comment.profile}}>
+                <span class="comments">{{comment.text}}</span>
+                <div class="timestamp">{{comment.created_at}}</div>
+              </li>
+            </ul>
           </div>
         </div>
-
       </div>
     </div>  
   </div>
+    
+</div>

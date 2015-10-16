@@ -4,11 +4,10 @@ angular.module('pantasy', ['ui.router',
   'ui.bootstrap',
   'pantasy.main',
   'pantasy.pants',
-  'pantasy.services',
-  'ngMessages'
+  'ngMessages',
 ])
 
-.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
+.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider){
   $stateProvider
     .state('app', {
       url: '/app',
@@ -22,7 +21,18 @@ angular.module('pantasy', ['ui.router',
       controller: 'PantController',
       controllerAs: 'pant'
     })
-    $urlRouterProvider.otherwise('/app');
+    $urlRouterProvider.otherwise('/app')
+    // $httpProvider.interceptors.push(function ($location) {
+    //     return {
+    //         request: function (config) {
+    //             config.headers["RefererFullUrl"] = $location.absUrl();
+    //             return config;
+    //         }
+    //     };
+    // });
+
+    // $locationProvider.html5Mode(true);
 }])
+
 
 

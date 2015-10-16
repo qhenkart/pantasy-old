@@ -2,18 +2,21 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var ejs = require('ejs');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var config = require('./config.json');
+var client = require('./server/config/mongo');
+
 var session = require('express-session');
-var ejs = require('ejs');
+var MongoStore = require('connect-mongo')(session);
 var qt = require('quickthumb');
 
 
 
-var passport = require('passport');
-var MongoClient = require('mongodb').MongoClient
-var MongoDBStore = require('connect-mongodb-session')(session);
-var client = require('./server/config/mongo');
+// var MongoClient = require('mongodb').MongoClient
+// var MongoDBStore = require('connect-mongodb-session')(session);
 
 
 
@@ -22,50 +25,34 @@ var pants = require('./server/routes/pants');
 
 var app = express();
 
-var url = 'mongodb://localhost:27017/pantasy';
-
-//establishes a Session store with MongoDB, this creates persistant sessions
-// var store = new MongoDBStore({
-//   uri: 'mongodb://localhost/pantasy',
-//   collection: 'mySessions'
-// });
-
-// error handling for session store
-// store.on('error', function(error) {
-//   console.log('ERROR IN STORE: ', error);
-// });
 
 // pass passport for authentication configuration
 require('./server/config/passport.js')(passport);
 
 
-
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'ejs');
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-// app.engine('.html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(qt.static(__dirname + '/'));
-
-//passport Oauth session configuration
+   
+// passport Oauth session configuration
 app.use(session({
-  secret: 'keyboard cat',
     //these cookies will last one week
   maxAge: 1000 * 60 * 60 * 24 * 7,
-  secret: 'keyboard cat',
+  secret: 'foo',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true },
-  // store: store
+  store: new MongoStore({ "db": config.mongo.name,
+    "host": config.mongo.host,
+    "port": config.mongo.port,
+    "username": config.mongo.username, 
+    "password": config.mongo.password,
+  })
 }));
 
 // Initializes Passport
