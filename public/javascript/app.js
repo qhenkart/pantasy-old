@@ -5,6 +5,7 @@ angular.module('pantasy', ['ui.router',
   'pantasy.main',
   'pantasy.pants',
   'ngMessages',
+  'imageupload'
 ])
 
 .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider){

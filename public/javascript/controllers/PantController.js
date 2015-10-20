@@ -9,15 +9,9 @@ angular.module('pantasy.pants', ['pantasy'])
       Modal.open({ content: '<a class="btn btn-primary" href="/auth/facebook" type="button">Login to Facebook</a>' });
     };
 
-
-
     this.fetchPants = function(){
-      debugger
-
       var context = this;
       api.fetchPant().then(function(resp){
-      debugger
-
         console.log('fetched')
         context.pant = resp.data;
         console.log(context.pant)
@@ -68,7 +62,15 @@ angular.module('pantasy.pants', ['pantasy'])
       api.login();
     }
 
-
+    this.single = function(image) {
+    debugger
+     api.postPhoto(image).success(function(result) {
+      debugger
+        this.uploadedImgSrc = result.src;
+        this.sizeInBytes = result.size;
+        console.log(result.src, result.size)
+      });
+    };
 
     this.fetchPants()
   }])

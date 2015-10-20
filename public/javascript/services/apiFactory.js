@@ -32,16 +32,38 @@ angular.module('pantasy')
       return $http.post('/p/comments', {code: code, comment: e});
     }
 
+    var postPhoto = function(image){
+     
+      var formData = new FormData();
+
+      var blob = dataURLtoBlob(image);
+      formData.append("file", blob, "image.jpg");
+
+      console.log(formData)
+      return $http.post($location.path()+'/upload', formData, {
+        transformRequest: angular.identity,
+        headers: {'Content-Type': undefined}
+      })
+    }
+
     return {
       fetchPant: fetchPant,
       postComment: postComment,
       checkAuth: checkAuth,
       login: login,
+      postPhoto: postPhoto,
       currentUser: function(){return currentUser;}
     } 
    
   }])
 
-
+function dataURLtoBlob(dataurl) {
+    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], {type:mime});
+}
 
   // $http.post('/someUrl', data, config).then(successCallback, errorCallback);

@@ -7,11 +7,47 @@
         </div>
         <div class="row">
           <div class="input-group">
-            <form enctype="multipart/form-data">
+            <form >
+            <!-- enctype="multipart/form-data" method='post' action='/p/upload'> -->
             Upload a Photo:
-                 <input name="title" type="text" class="form-control" placeholder="Photo Caption"/>
+
+            <button
+              input-image
+              id="inputImage2"
+              append-data-uri
+              resize
+              resize-max-height="300"
+              resize-max-width="250"
+              resize-quality="0.7"
+              ng-model="image">
+              Custom Upload Button
+            </button> 
+            <img ng-show="image" ng-src="{{image.resized.dataURL}}"/>
+            <button 
+              type="submit"
+              ng-click="pant.single(image.resized.dataURL)"
+              ng-disabled="!image">
+              Add
+            </button>
+
+            <br>
+            <pre>{{image | json}}</pre>
+          </div>
+             <!--  <input id="inputImage2" 
+                     type="file" 
+                     accept="image/*" 
+                     image="image2" 
+                     resize-max-height="300"
+                     resize-max-width="250"
+                     resize-quality="0.7" />
+                         
+                     <p>Resized</p>
+                     <img ng-show="image2" ng-src="{{image2.resized.dataURL}}"/>
+                     <button type="submit" ng-click="pant.single(image2.resized)">Add</button>
+                 
+                  <input name="title" type="text" class="form-control" placeholder="Photo Caption"/>
                 <input multiple="multiple" class="form-control" name="upload" type="file" />
-                <input type="submit" class="form-control btn btn-primary" ng-click="pant.newPhoto($event)" value="Upload" />
+                <input type="submit" class="form-control btn btn-primary"  value="Upload" /> -->
             </form>
           </div>
         </div>

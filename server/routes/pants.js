@@ -3,6 +3,9 @@ var mongo = require('../mongoUtils')
 var formidable = require('formidable');
 var fs = require('fs-extra');
 var util = require('util');
+var AWS = require('aws-sdk');
+var ObjectID = require('mongodb').ObjectID;
+var config = require('../../config.json')
 
 module.exports = function(passport) {
   var router = express.Router();
@@ -32,28 +35,34 @@ module.exports = function(passport) {
   });
 
   router.post('/:code/upload', ensureAuthenticated,function (req, res){
-    console.log(req.params)
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {
-      res.writeHead(200, {'content-type': 'text/plain'});
-      res.write('received upload:\n\n');
-      res.end(util.inspect({fields: fields, files: files}));
+      console.log('err ', err)
+
     });
     form.on('end', function(fields, files) {
-      /* Temporary location of our uploaded file */
-      var temp_path = this.openedFiles[0].path;
-      /* The file name of the uploaded file */
-      var file_name = 'pantID' + 'pantPhotoNumber'
-      // this.openedFiles[0].name;
-      /* Location where we want to copy the uploaded file */
-      var new_location = 'uploads/';
 
-      fs.copy(temp_path, new_location + file_name, function(err) {  
-        if (err) {
-          console.error(err);
-        } else {
-          console.log("success!")
-        }
+      var file = this.openedFiles[0]
+      var temp_path = file.path;
+      var params = {
+        Bucket: 'pantasy',
+        Key: ObjectID().toString() + '.jpg',
+        ACL: 'public-read',
+        ContentType: file.type
+      };
+
+      fs.readFile(temp_path, function(err, data) {
+        if (err) throw err;
+        params.Body = data;
+
+        s3.putObject(params, function (perr, pres) {
+          if (perr) {
+            console.log("Error uploading data: ", perr);
+          } else {
+            console.log("Successfully uploaded data to myBucket/myKey");
+            res.end()
+          }
+        });
       });
     });
   });
@@ -66,3 +75,11 @@ function ensureAuthenticated(req, res, next) {
   console.log("user not logged in")  
   res.json({success:false, msg: 'You must be authenticated'})
 } 
+
+AWS.config.update({
+    accessKeyId: config.aws.accessKey,
+    secretAccessKey: config.aws.secret
+})
+
+var s3 = new AWS.S3();
+
