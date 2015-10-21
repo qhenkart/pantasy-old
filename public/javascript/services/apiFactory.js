@@ -34,7 +34,7 @@ angular.module('pantasy')
 
 
     var postPhoto = function(image, imageCaption){
-     
+      if(!image || image.length < 1) return;
       var formData = new FormData();
 
       var blob = dataURLtoBlob(image);

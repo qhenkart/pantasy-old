@@ -7,7 +7,8 @@ angular.module('pantasy.pants', ['pantasy'])
     this.hasPants = false;
 
     this.openModal = function(content){
-      Modal.open({ content: '<a class="btn btn-primary" href="/auth/facebook" type="button">Login to Facebook</a>' });
+      content = content || '<a class="btn btn-primary" href="/auth/facebook" type="button">Login to Facebook</a>';
+      Modal.open({ content: content });
     };
 
     this.fetchPants = function(){
@@ -80,7 +81,9 @@ angular.module('pantasy.pants', ['pantasy'])
         cb() 
       }
     }
-
+    this.showPhoto= function(image){
+      this.openModal('<img class="img-responsive large" src='+image+' />');
+    }
     this.fetchPants()
   }])
 

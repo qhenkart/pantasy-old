@@ -11,7 +11,6 @@ module.exports = function(passport) {
   var router = express.Router();
 
   router.get('/', function(req, res){
-    //browse pants
   })
 
   router.get('/:code', function(req, res) {
@@ -51,7 +50,8 @@ module.exports = function(passport) {
         ContentType: file.type
       };
       var url = 'https://s3-us-west-1.amazonaws.com/pantasy/' + params.Key;
-
+      req.body.comment = {imageUrl: url, text: imageCaption, created_at: new Date(), name: req.user.name, profile: req.user.profile, userID: req.user.id}
+      req.body.code = req.params.code;
 
       fs.readFile(temp_path, function(err, data) {
         if (err) throw err;
@@ -62,7 +62,7 @@ module.exports = function(passport) {
             console.log("Error uploading data: ", perr);
           } else {
             console.log("Successfully uploaded data to myBucket/myKey");
-            mongo.addPhoto(req, res, url, imageCaption, function(){
+            mongo.addComment(req, res, function(){
               res.json({success:true, msg: 'photo uploaded'})
               
             })

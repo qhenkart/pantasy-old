@@ -14,7 +14,7 @@
           </div>
           <div class="row">
             <div class="input-group col-xs-12">
-              <form id="photoForm">
+          <!--     <form id="photoForm">
                 <div class="input-group col-xs-6 col-xs-offset-3">
                   <button
                     input-image
@@ -42,18 +42,36 @@
                 </button>
 
               </form>
-            </div>
+ -->            </div>
           </div>
         </div>
       </div>
       <div class="jumbotron col-sm-7 pants-comments">
         <div class="row">
-          <form class="col-md-10 col-md-offset-1" ng-submit="pant.newComment(val);val=''">
+          <form class="col-md-10 col-md-offset-1">
           <div class="input-group">
              <input type="text" class="form-control" id="comment-field" ng-model="val" placeholder="What's your Pantasy story?">
+              <img ng-show="image" ng-if="image"class="col-sm-12" ng-src="{{image.resized.dataURL}}"/>
              <span class="input-group-btn">
-                  <button class="btn btn-primary" type="submit">Submit</button>
+                  <button class="btn btn-primary" ng-if="image" ng-click="pant.single(image.resized.dataURL, val);$parent.image=false;$parent.val=''" type="submit">Submit</button>
+                  <button class="btn btn-primary" ng-if="!image" ng-click="pant.newComment(val);$parent.val=''" type="submit">Submit</button>
              </span>
+             <span class="input-group-btn">
+
+               <button
+                 input-image
+                 id="inputImage2"
+                 append-data-uri
+                 resize
+                 resize-max-height="300"
+                 resize-max-width="250"
+                 resize-quality="0.7"
+                 ng-init="image=false"
+                 ng-model="image"
+                 class="btn form-control">
+                 Image
+               </button>
+              </span>
             </form>
           </div>
         </div>
@@ -74,11 +92,13 @@
                           <time class="comment-date timestamp">{{comment.created_at}}</time>
                         </header>
                         <div class="comment-post">
-                          
                             {{comment.text}}
-                          
                         </div>
+                      <figure class="thumbnail">
+                        <img class="img-responsive" ng-click="pant.showPhoto(comment.imageUrl)" src={{comment.imageUrl}} />
+                      </figure>
                       </div>
+
                     </div>
                   </div>
                 </article>
@@ -89,3 +109,9 @@
   </div>
     
 </div>
+
+
+
+<!-- <div class="col-lg-12"><p>lorem ipsum dolor sit...more text here</p>
+<img class="col-lg-3 img-responsive" src="https://dl.dropboxusercontent.com/u/30198996/Treehouse/images/treehouse-blog.png">
+</div> -->

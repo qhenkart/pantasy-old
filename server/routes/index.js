@@ -9,6 +9,10 @@ module.exports = function(passport) {
       res.sendFile('../public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
   });
 
+  router.get('/marketing', function(req, res){
+    res.redirect('http://www.givepantasy.com')
+  })
+
   // router.get('/auth/facebook', function(req, res){
   //   req.session.something = req.headers.something
   //   console.log(req.headers.something, "authentication begingin")
