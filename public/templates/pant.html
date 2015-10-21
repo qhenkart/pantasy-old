@@ -1,60 +1,54 @@
   <div ui-view>
     <div class="row">
       <div class="jumbotron col-md-3 col-sm-4 col-md-offset-1 pants-profile">
-        <div class="row">
-          <div class="jumbotron col-md-10" id="pants-photo">
+        <div class="container">
+          <div class="row">
+            <div ng-if="!pant.hasPants">
+              <div class="jumbotron col-md-10" id="pants-photo">
+              </div>
+            </div>    
+            <div ng-if="pant.hasPants">
+              <img class="profilePhoto col-md-12" src={{pant.pant.photos[0].imageUrl}}>
+                <!-- <img class="profilePhoto col-md-12"ng-repeat="photo in pant.pant.photos" src={{photo.imageUrl}}> -->
+            </div>   
           </div>
-        </div>
-        <div class="row">
-          <div class="input-group">
-            <form >
-            <!-- enctype="multipart/form-data" method='post' action='/p/upload'> -->
-            Upload a Photo:
+          <div class="row">
+            <div class="input-group col-xs-12">
+              <form id="photoForm">
+                <div class="input-group col-xs-6 col-xs-offset-3">
+                  <button
+                    input-image
+                    id="inputImage2"
+                    append-data-uri
+                    resize
+                    resize-max-height="300"
+                    resize-max-width="250"
+                    resize-quality="0.7"
+                    ng-model="image"
+                    class="btn ">
+                    Upload image
+                  </button>
+                </div>
+                <br /> 
+                <img ng-show="image" class="col-sm-12" ng-src="{{image.resized.dataURL}}"/>
+                <input type="test" ng-show="image" class="form-control" ng-model="imageCaption" placeholder="Add a caption to your photo">
+                <button 
+                  type="submit"
+                  class="btn btn-primary col-sm-12 input-group"
+                  ng-show="image"
+                  ng-click="pant.single(image.resized.dataURL, imageCaption); imageCaption=''; image=false"
+                  ng-disabled="!image">
+                  Submit
+                </button>
 
-            <button
-              input-image
-              id="inputImage2"
-              append-data-uri
-              resize
-              resize-max-height="300"
-              resize-max-width="250"
-              resize-quality="0.7"
-              ng-model="image">
-              Custom Upload Button
-            </button> 
-            <img ng-show="image" ng-src="{{image.resized.dataURL}}"/>
-            <button 
-              type="submit"
-              ng-click="pant.single(image.resized.dataURL)"
-              ng-disabled="!image">
-              Add
-            </button>
-
-            <br>
-            <pre>{{image | json}}</pre>
-          </div>
-             <!--  <input id="inputImage2" 
-                     type="file" 
-                     accept="image/*" 
-                     image="image2" 
-                     resize-max-height="300"
-                     resize-max-width="250"
-                     resize-quality="0.7" />
-                         
-                     <p>Resized</p>
-                     <img ng-show="image2" ng-src="{{image2.resized.dataURL}}"/>
-                     <button type="submit" ng-click="pant.single(image2.resized)">Add</button>
-                 
-                  <input name="title" type="text" class="form-control" placeholder="Photo Caption"/>
-                <input multiple="multiple" class="form-control" name="upload" type="file" />
-                <input type="submit" class="form-control btn btn-primary"  value="Upload" /> -->
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>
       <div class="jumbotron col-sm-7 pants-comments">
         <div class="row">
-          <form class="col-md-10 col-md-offset-1" ng-submit="pant.newComment(val)">
+          <form class="col-md-10 col-md-offset-1" ng-submit="pant.newComment(val);val=''">
           <div class="input-group">
              <input type="text" class="form-control" id="comment-field" ng-model="val" placeholder="What's your Pantasy story?">
              <span class="input-group-btn">
@@ -65,7 +59,6 @@
         </div>
         <div class='row'>
           <div class="jumbotron col-md-10 col-md-offset-1 messages" id="messages">
-              <!-- <li class="list-group-item comment-list" ng-repeat="comment in pant.pant.comments"> -->
               <article class="row" ng-repeat="comment in pant.pant.comments">
                   <div class="col-md-2 col-sm-2 hidden-xs">
                     <figure class="thumbnail">

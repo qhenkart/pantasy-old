@@ -4,6 +4,7 @@ angular.module('pantasy.pants', ['pantasy'])
   .controller('PantController', ['api', function(api){
     this.pant = {};
     this.val = '';
+    this.hasPants = false;
 
     this.openModal = function(content){
       Modal.open({ content: '<a class="btn btn-primary" href="/auth/facebook" type="button">Login to Facebook</a>' });
@@ -16,7 +17,7 @@ angular.module('pantasy.pants', ['pantasy'])
         context.pant = resp.data;
         console.log(context.pant)
         if(context.pant.photos.length){
-          //populate photos
+          context.hasPants = true;
         }else{
 
         }
@@ -37,40 +38,48 @@ angular.module('pantasy.pants', ['pantasy'])
     this.newComment = function(val){
       if(!val || val.length < 1 || /<|>/.test(val)) return;
       var context = this;
-      console.log(api.currentUser())
+
+      this.authenticate(function(){
+        api.postComment(val).then(function(resp){
+          context.fetchPants();
+        }, 
+        function(err){
+           console.log(err);
+        }) 
+        
+      })      
+    }
+
+    this.oauth = function(){
+      api.login();
+    }
+
+    this.single = function(image, photoCaption) {
+      var context = this;
+      if(!photoCaption || /<|>/.test(photoCaption)) photoCaption = '';
+
+      this.authenticate(function(){
+         api.postPhoto(image, photoCaption).success(function(result) {
+            context.fetchPants();
+          });
+      })
+    };
+
+    this.authenticate = function(cb){
+      var context = this;
       if(!api.currentUser()){
         api.checkAuth(function(bool){
           if(bool){
-           return;
+            cb()
           }else{
             context.openModal()     
           }
         })
       
       }else{
-        api.postComment(val).then(function(resp){
-
-          $('#comment-field').val('')
-
-          context.fetchPants();
-        }, function(err){
-          console.log(err);
-        }) 
+        cb() 
       }
     }
-    this.oauth = function(){
-      api.login();
-    }
-
-    this.single = function(image) {
-    debugger
-     api.postPhoto(image).success(function(result) {
-      debugger
-        this.uploadedImgSrc = result.src;
-        this.sizeInBytes = result.size;
-        console.log(result.src, result.size)
-      });
-    };
 
     this.fetchPants()
   }])

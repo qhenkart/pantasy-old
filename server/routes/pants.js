@@ -19,15 +19,13 @@ module.exports = function(passport) {
   });
 
   router.get('/:code/info', function(req, res) {
-    console.log('getting ', req.params.code)
     mongo.checkPantID(req, res, function(pant){
       res.json(pant)
     })
   });
 
   router.post('/comments',function(req, res){
-    console.log('postd coment')
-    req.body.comment = {text: req.body.comment, created_at: new Date(), name: req.user.name, profile: req.user.profile}
+    req.body.comment = {text: req.body.comment, created_at: new Date(), name: req.user.name, profile: req.user.profile, userID: req.user.id}
     mongo.addComment(req, res, function(resp){
       res.json(resp);
     })
@@ -36,8 +34,10 @@ module.exports = function(passport) {
 
   router.post('/:code/upload', ensureAuthenticated,function (req, res){
     var form = new formidable.IncomingForm();
+    var imageCaption = "";
     form.parse(req, function(err, fields, files) {
-      console.log('err ', err)
+      if(err) console.log('err ', err);
+      imageCaption = fields.imageCaption;
 
     });
     form.on('end', function(fields, files) {
@@ -50,6 +50,8 @@ module.exports = function(passport) {
         ACL: 'public-read',
         ContentType: file.type
       };
+      var url = 'https://s3-us-west-1.amazonaws.com/pantasy/' + params.Key;
+
 
       fs.readFile(temp_path, function(err, data) {
         if (err) throw err;
@@ -60,7 +62,10 @@ module.exports = function(passport) {
             console.log("Error uploading data: ", perr);
           } else {
             console.log("Successfully uploaded data to myBucket/myKey");
-            res.end()
+            mongo.addPhoto(req, res, url, imageCaption, function(){
+              res.json({success:true, msg: 'photo uploaded'})
+              
+            })
           }
         });
       });

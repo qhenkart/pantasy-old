@@ -32,12 +32,14 @@ angular.module('pantasy')
       return $http.post('/p/comments', {code: code, comment: e});
     }
 
-    var postPhoto = function(image){
+
+    var postPhoto = function(image, imageCaption){
      
       var formData = new FormData();
 
       var blob = dataURLtoBlob(image);
       formData.append("file", blob, "image.jpg");
+      formData.append('imageCaption', imageCaption)
 
       console.log(formData)
       return $http.post($location.path()+'/upload', formData, {
