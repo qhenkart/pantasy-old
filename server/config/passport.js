@@ -52,7 +52,8 @@ module.exports = function(passport) {
                 id: profile.id,
                 name: profile.displayName,
                 FBtoken: accessToken,
-                profile: profilePhoto
+                profile: profilePhoto,
+                pants: []
               };
               db.collection('users').insert(newUser);
               return done(null, newUser);

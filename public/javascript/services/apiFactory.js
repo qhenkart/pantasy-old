@@ -14,12 +14,16 @@ angular.module('pantasy')
       $http.get('/auth/facebook');
     };
 
+    var getUser = function(){
+      return $http.get('/user')
+    }
+
     var checkAuth = function(cb){
       var config = { headers: { something: $location.path() } }; 
       $http.get('/auth/isAuthenticated', config).then(function(resp){
         if(resp.data.authorized){
           currentUser = resp.data.user;
-          cb(true)
+          cb(currentUser)
         }else{
           cb(false)
         }
@@ -41,7 +45,6 @@ angular.module('pantasy')
       formData.append("file", blob, "image.jpg");
       formData.append('imageCaption', imageCaption)
 
-      console.log(formData)
       return $http.post($location.path()+'/upload', formData, {
         transformRequest: angular.identity,
         headers: {'Content-Type': undefined}
@@ -54,6 +57,7 @@ angular.module('pantasy')
       checkAuth: checkAuth,
       login: login,
       postPhoto: postPhoto,
+      getUser: getUser,
       currentUser: function(){return currentUser;}
     } 
    

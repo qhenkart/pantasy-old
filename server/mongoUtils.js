@@ -38,6 +38,9 @@ exports.addComment = function(req, res, cb){
     .then(function(success){
       console.log("successful posting")
       cb(success);
+      client.then(function(db){
+        return db.collection('users').update({id:req.user.id}, {$addToSet: {pants: req.body.code}})
+      })
     })
     .then(function(err){
       if(handleError(err, res)) return;

@@ -44,7 +44,17 @@ module.exports = function(passport) {
     authorized.auth = req.isAuthenticated();
     res.json({authorized: authorized.auth, user: req.user});
   });
+
+  router.get('/user', function(req, res){
+    res.json({user: req.user})
+  })
   return router
 }
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }  
+  console.log("user not logged in")  
+  res.json({success:false, msg: 'You must be authenticated'})
+} 
 
 
