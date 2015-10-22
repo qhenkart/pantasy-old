@@ -8,7 +8,9 @@ angular.module('pantasy.pants', ['pantasy'])
     this.uploading = false;
     this.profile = false;
     this.authenticated = false;
-    this.feedLimit = 2
+    this.feedLimit = 5
+    this.tab = false;
+    this.userId = '';
     this.pants = [];
 
     this.openModal = function(content){
@@ -28,7 +30,7 @@ angular.module('pantasy.pants', ['pantasy'])
           context.pant.comments = context.pant.comments.reverse();
           var images = [];
           context.pant.comments = context.pant.comments.map(function(comment){
-            comment.created_at = moment(comment.created_at).fromNow();
+            comment.reformattedCreated_at = moment(comment.created_at).fromNow();
             if(comment.imageUrl){
               images.push(comment.imageUrl);
             }
@@ -86,28 +88,41 @@ angular.module('pantasy.pants', ['pantasy'])
       if(!user){
         api.checkAuth(function(user){
           if(user){
-            debugger
             context.authenticated = true
             context.pants = user.pants;
+            context.userId = user.id
             cb()
           }else{
-            debugger
-            context.openModal()     
+            if(context.tab){
+              context.openModal()     
+            }else{
+              context.tab = true;
+            }
           }
         })
       
       }else{
         context.authenticated = true
         context.pants = user.pants;
+        context.userId = user.id
+
         cb() 
       }
+    }
+
+    this.removeComment = function(comment){
+      var context = this;
+      api.removeComment(comment).then(function(resp){
+        context.fetchPants();
+
+      }).then(function(err){console.log(err)})
     }
 
     this.showPhoto= function(image){
       this.openModal('<img class="img-responsive large" src='+image+' />');
     }
-    debugger
-    this.authenticate(function(){});
+    this.authenticate(function(){return;})
+
     this.fetchPants()
   }])
 

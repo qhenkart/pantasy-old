@@ -5,13 +5,13 @@
           <a class="navbar-brand" href="#">Pantasy</a>
         </div>
         <ul class="nav navbar-nav">
-          <!-- <li><a href="#">Pants Profile</a></li> -->
           <li role="presentation" class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             My Pants <span class="caret"></span>
           </a>
             <ul ng-if="pant.pants.length"class="dropdown-menu">
-              <li ng-repeat="pant in pant.pants">{{pant}}</li>
+              <li class="pant-menu text-center" ng-repeat="pant in pant.pants"><a ng-href="/p/{{pant}}">{{pant}}</a></li>
+
             </ul>
           </li>
           <li><a ng-if="!pant.authenticated" href="/auth/facebook">Log in</a></li>
@@ -85,11 +85,12 @@
                   </figure>
                 </div>
                 <div class="col-md-10 col-sm-10">
+              <span ng-if="comment.userID === pant.userId" ng-click="pant.removeComment(comment)"class="glyphicon glyphicon-remove delete" aria-hidden="true"></span>
                   <div class="panel panel-default arrow left">
                     <div class="panel-body">
                       <header class="text-left">
                         <div class="comment-user username">{{comment.name}}</div>
-                        <time class="comment-date timestamp">{{comment.created_at}}</time>
+                        <time class="comment-date timestamp">{{comment.reformattedCreated_at}}</time>
                       </header>
                       <div class="comment-post">
                           {{comment.text}}
@@ -109,7 +110,7 @@
     </div>
   </div>  
 </div>
-  
+
 
 
 

@@ -36,6 +36,11 @@ angular.module('pantasy')
       return $http.post('/p/comments', {code: code, comment: e});
     }
 
+    var removeComment = function(comment){
+      var code = $location.path().match(/[^\/p\/]/g).join('');
+
+      return $http.post('/p/deleteComment', {code: code, comment: comment})
+    }
 
     var postPhoto = function(image, imageCaption){
       if(!image || image.length < 1) return;
@@ -58,6 +63,7 @@ angular.module('pantasy')
       login: login,
       postPhoto: postPhoto,
       getUser: getUser,
+      removeComment: removeComment,
       currentUser: function(){return currentUser;}
     } 
    

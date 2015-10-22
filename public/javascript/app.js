@@ -12,10 +12,10 @@ angular.module('pantasy', ['ui.router',
 .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider){
   $stateProvider
     .state('app', {
-      url: '/app',
-      templateUrl: '../templates/main.html',
-      controller: 'MainController',
-      controllerAs: 'main'
+      url: '/p/home',
+      templateUrl: '../templates/pant.html',
+      controller: 'PantController',
+      controllerAs: 'pant'
     })
     .state('pant', {
       url: '/p/:slug',
@@ -23,7 +23,7 @@ angular.module('pantasy', ['ui.router',
       controller: 'PantController',
       controllerAs: 'pant'
     })
-    $urlRouterProvider.otherwise('/app')
+    $urlRouterProvider.otherwise('/p/home')
     // $httpProvider.interceptors.push(function ($location) {
     //     return {
     //         request: function (config) {

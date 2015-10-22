@@ -31,6 +31,13 @@ module.exports = function(passport) {
     
   });
 
+  router.post('/deleteComment', function(req, res){
+    mongo.deleteComment(req, res, function(resp){
+      console.log('deleted')
+      res.end()
+    })
+  })
+
   router.post('/:code/upload', ensureAuthenticated,function (req, res){
     var form = new formidable.IncomingForm();
     var imageCaption = "";

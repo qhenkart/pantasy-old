@@ -48,6 +48,33 @@ exports.addComment = function(req, res, cb){
   });
 }
 
+exports.deleteComment = function(req, res, cb) {
+  var comment = req.body.comment
+  console.log('comment', comment)
+  client.then(function(db){
+    // return db.collection('pants').findOneAsync({code: req.body.code})
+    return db.collection('pants').update({code: req.body.code}, {$pull:{'comments': {'name': comment.name, "text": comment.text, "created_at": new Date(comment.created_at)}}})
+    // return db.collection('pants').update( { code: req.body.code }, { $pull: { comments: { $elemMatch: {userID: comment.userID, text: comment.text} } } })
+    // return db.collection('pants').update( { code: req.body.code }, { $pull: { comments: {created_at: comment.created_at, userID: comment.userID, text: comment.text} } })
+
+    .then(function(success){
+
+      // return db.collection('pants').update({code: req.body.code})
+
+      console.log('deleted', success.result)
+      cb(success.result)
+    })
+    .then(function(err){
+      if(handleError(err,res)) return;
+    })
+  })
+}
+// {created_at: "2015-10-22T06:00:22.896Z",
+// name: "Quest Henkart",
+// profile: "https://scontent.xx.fbcdn.net/hprofile-xpt1/v/t1.0-1/p200x200/12122682_10100175344981064_3967382873227556674_n.jpg?oh=30c2d48373f87e82ea6f55ec0137777f&oe=56C699EB",
+// text: "asd",
+// userID: "10100172704777054"
+// }
 // exports.addPhoto = function(req, res, path, imageCaption, cb){
 
 //   client.then(function(db){
