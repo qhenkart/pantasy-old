@@ -4,6 +4,7 @@ angular.module('pantasy.pants', ['pantasy'])
   .controller('PantController', ['api',function(api){
     this.pant = {};
     this.val = '';
+    this.hasImage = false;
     this.hasPants = false;
     this.uploading = false;
     this.profile = false;
@@ -27,6 +28,7 @@ angular.module('pantasy.pants', ['pantasy'])
         if(context.pant.photos.length){
         }
         if(context.pant.comments.length){
+          context.hasPants = true;
           context.pant.comments = context.pant.comments.reverse();
           var images = [];
           context.pant.comments = context.pant.comments.map(function(comment){
@@ -37,7 +39,7 @@ angular.module('pantasy.pants', ['pantasy'])
             return comment;
           })
 
-          if(images.length) context.hasPants = true;
+          if(images.length) context.hasImage = true;
           context.profile = images[Math.floor(Math.random() * images.length)];
           api.getUser().then(function(resp){
             context.pants = resp.data.user.pants;

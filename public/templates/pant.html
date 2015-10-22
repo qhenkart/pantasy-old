@@ -28,11 +28,11 @@
     <div class="jumbotron col-md-3 col-sm-4 col-md-offset-1 pants-profile">
       <div class="container">
         <div class="row">
-          <div ng-if="!pant.hasPants">
+          <div ng-if="!pant.hasImage">
             <div class="jumbotron col-md-10" id="pants-photo">
             </div>
           </div>    
-          <div ng-if="pant.hasPants">
+          <div ng-if="pant.hasImage">
             <figure class="thumbnail" id='profile-frame'>
               <img class="profilePhoto img-responsive" src={{pant.profile}}>
             </figure>
@@ -104,7 +104,7 @@
                   </div>
                 </div>
               </article>
-              <button class="btn btn-info btn-xs center-block" ng-click="pant.feedLimit = pant.feedLimit + 5">Show more...</button>
+              <button class="btn btn-info btn-xs center-block" ng-if="pant.hasPants" ng-click="pant.feedLimit = pant.feedLimit + 5">Show more...</button>
         </div>
       </div>
     </div>
