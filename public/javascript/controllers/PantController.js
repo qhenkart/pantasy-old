@@ -52,7 +52,7 @@ angular.module('pantasy.pants', ['pantasy'])
           if(images.length) context.hasImage = true;
           context.profile = images[Math.floor(Math.random() * images.length)];
           api.getUser().then(function(resp){
-            context.pants = resp.data.user.pants;
+            if(resp) context.pants = resp.data.user.pants;
           })
         }else{
           context.pant.comments.push({text:"No Comments Yet", profile:'../images/pantsicon.jpg'})
