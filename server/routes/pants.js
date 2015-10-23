@@ -51,12 +51,12 @@ module.exports = function(passport) {
       var file = this.openedFiles[0]
       var temp_path = file.path;
       var params = {
-        Bucket: 'pantasy',
-        Key: ObjectID().toString() + '.jpg',
+        Bucket: 'givepantasy',
+        Key: (new Date()).toString().replace(/ /g, '') + req.user.id+ '.jpg',
         ACL: 'public-read',
         ContentType: file.type
       };
-      var url = 'https://s3-us-west-1.amazonaws.com/pantasy/' + params.Key;
+      var url = 'https://s3-us-west-2.amazonaws.com/givepantasy/' + params.Key;
       req.body.comment = {imageUrl: url, text: imageCaption, created_at: new Date(), name: req.user.name, profile: req.user.profile, userID: req.user.id}
       req.body.code = req.params.code;
 

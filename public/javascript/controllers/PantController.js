@@ -10,6 +10,7 @@ angular.module('pantasy.pants', ['pantasy'])
     this.profile = false;
     this.authenticated = false;
     this.feedLimit = 5
+    this.pantLength = 0
     this.tab = false;
     this.userId = '';
     this.pants = [];
@@ -18,6 +19,14 @@ angular.module('pantasy.pants', ['pantasy'])
       content = content || '<a class="btn btn-primary" href="/auth/facebook" type="button">Login to Facebook</a>';
       Modal.open({ content: content });
     };
+
+    this.handleMore = function(){
+      this.feedLimit += 5
+      if(this.feedLimit >= this.pantLength) {
+        this.hasPants = false;
+        this.feedLimit = this.pantLength
+      }
+    }
 
     this.fetchPants = function(){
       var context = this;
@@ -28,7 +37,8 @@ angular.module('pantasy.pants', ['pantasy'])
         if(context.pant.photos.length){
         }
         if(context.pant.comments.length){
-          context.hasPants = true;
+          context.pantLength = context.pant.comments.length
+          if(context.pant.comments.length > 5) context.hasPants = true;
           context.pant.comments = context.pant.comments.reverse();
           var images = [];
           context.pant.comments = context.pant.comments.map(function(comment){
