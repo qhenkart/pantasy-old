@@ -6,7 +6,6 @@ angular.module('pantasy')
     var currentUser;
 
     var fetchPant = function(){
-      console.log($location.path())
       return $http.get($location.path()+'/info')
     }
 
@@ -31,7 +30,6 @@ angular.module('pantasy')
     }
 
     var postComment = function(e){
-      console.log('about to post')
       var code = $location.path().match(/[^\/p\/]/g).join('');
       return $http.post('/p/comments', {code: code, comment: e});
     }

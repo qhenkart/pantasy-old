@@ -31,9 +31,7 @@ angular.module('pantasy.pants', ['pantasy'])
     this.fetchPants = function(){
       var context = this;
       api.fetchPant().then(function(resp){
-        console.log('fetched')
         context.pant = resp.data;
-        console.log(context.pant)
         if(context.pant.photos.length){
         }
         if(context.pant.comments.length){
@@ -52,7 +50,7 @@ angular.module('pantasy.pants', ['pantasy'])
           if(images.length) context.hasImage = true;
           context.profile = images[Math.floor(Math.random() * images.length)];
           api.getUser().then(function(resp){
-            if(resp) context.pants = resp.data.user.pants;
+            if(resp.data.user) context.pants = resp.data.user.pants;
           })
         }else{
           context.pant.comments.push({text:"No Comments Yet", profile:'../images/pantsicon.jpg'})

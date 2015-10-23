@@ -34,7 +34,7 @@
           </div>    
           <div ng-if="pant.hasImage">
             <figure class="thumbnail" id='profile-frame'>
-              <img class="profilePhoto img-responsive" src={{pant.profile}}>
+              <img class="profilePhoto img-responsive" ng-src={{pant.profile}}>
             </figure>
           </div>   
         </div>
@@ -80,7 +80,7 @@
             <article class="row" ng-repeat="comment in pant.pant.comments | limitTo:pant.feedLimit">
                 <div class="col-md-2 col-sm-2 hidden-xs">
                   <figure class="thumbnail">
-                    <img class="img-responsive" src={{comment.profile}} />
+                    <img class="img-responsive" ng-src={{comment.profile}} />
                     <figcaption class="text-center">{{comment.name}}</figcaption>
                   </figure>
                 </div>
@@ -97,7 +97,7 @@
                       </div>
                     <figure ng-if="comment.imageUrl" class="thumbnail">
                     <!--ng-click="pant.showPhoto(comment.imageUrl)" -->
-                      <img class="img-responsive" src={{comment.imageUrl}} />
+                      <img class="img-responsive" ng-src={{comment.imageUrl}} />
                     </figure>
                     </div>
 
