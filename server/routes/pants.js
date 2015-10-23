@@ -52,7 +52,7 @@ module.exports = function(passport) {
       var temp_path = file.path;
       var params = {
         Bucket: 'givepantasy',
-        Key: (new Date()).toString().replace(/ /g, '') + req.user.id+ '.jpg',
+        Key: (new Date()).toString().replace(/[^a-zA-Z|\w|^\d]/g, '') + req.user.id+ '.jpg',
         ACL: 'public-read',
         ContentType: file.type
       };
