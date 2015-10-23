@@ -35,7 +35,7 @@ module.exports = function(passport) {
   passport.use(new FacebookStrategy({
       clientID: config.facebook.id,
       clientSecret: config.facebook.secret,
-      callbackURL: 'http://localhost:3000/auth/facebook/callback'
+      callbackURL: config.facebook.callback
     },
     function(accessToken, refreshToken, profile, done) {
 //saves user data into database or logs them in if they already exist. Always updates
